@@ -13,6 +13,10 @@ public interface UserCreditService {
     List<UserCredit> findByCredit(String creditName);
     List<UserCredit> findByUser(User user);
     List<UserCredit> findByUser(String userName);
+
+    List<UserCredit> findByUserOrdered(User user);
+    List<UserCredit> findByUserOrdered(String userName);
+
     UserCredit findByCreditAndUser(Credit credit, User user);
     UserCredit findByCreditAndUser(String creditName, String userName);
 

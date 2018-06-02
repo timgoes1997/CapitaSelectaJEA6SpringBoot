@@ -48,6 +48,16 @@ public class UserCreditServiceImpl implements UserCreditService {
     }
 
     @Override
+    public List<UserCredit> findByUserOrdered(User user) {
+        return findByUserOrdered(user);
+    }
+
+    @Override
+    public List<UserCredit> findByUserOrdered(String userName) {
+        return userCreditRepository.findAllByUserOrderByLastUpdateDesc(userService.findByUsername(userName));
+    }
+
+    @Override
     public UserCredit findByCreditAndUser(Credit credit, User user) {
         return userCreditRepository.findByUserAndCredit(user, credit);
     }

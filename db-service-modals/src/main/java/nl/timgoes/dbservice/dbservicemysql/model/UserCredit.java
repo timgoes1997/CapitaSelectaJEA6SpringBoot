@@ -14,11 +14,11 @@ public class UserCredit implements Serializable {
     @Column(name="ID")
     private Long id;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="USER_ID")
     private User user;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="CREDIT_ID")
     private Credit credit;
 

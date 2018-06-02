@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserCreditRepository extends JpaRepository<UserCredit, Long> {
     List<UserCredit> findAllByOrderByLastUpdateDesc();
     List<UserCredit> findAllByUser(User user);
-    //List<UserCredit> findAllByUser_NameAndOrderByLastUpdateDesc(String userName);
+    List<UserCredit> findAllByUserOrderByLastUpdateDesc(User user);
     UserCredit findByUserAndCredit(User user, Credit credit);
     List<UserCredit> findAllByCredit(Credit credit);
 }
