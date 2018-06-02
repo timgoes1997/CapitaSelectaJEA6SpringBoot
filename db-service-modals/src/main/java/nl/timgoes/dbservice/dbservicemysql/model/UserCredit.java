@@ -3,6 +3,7 @@ package nl.timgoes.dbservice.dbservicemysql.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity(name="USER_CREDIT")
@@ -21,7 +22,11 @@ public class UserCredit implements Serializable {
     @JoinColumn(name="CREDIT_ID")
     private Credit credit;
 
-    @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,2)")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "LAST_UPDATE")
+    private Date lastUpdate;
+
+    @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,26)")
     private BigDecimal amount;
 
     public UserCredit(User user, Credit credit, BigDecimal amount) {
@@ -53,22 +58,20 @@ public class UserCredit implements Serializable {
         this.credit = credit;
     }
 
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "UserCredit{" +
-                "id=" + id +
-                ", user=" + user +
-                ", credit=" + credit +
-                ", amount=" + amount +
-                '}';
     }
 
     @Override
@@ -79,12 +82,24 @@ public class UserCredit implements Serializable {
         return Objects.equals(id, that.id) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(credit, that.credit) &&
+                Objects.equals(lastUpdate, that.lastUpdate) &&
                 Objects.equals(amount, that.amount);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, user, credit, amount);
+        return Objects.hash(id, user, credit, lastUpdate, amount);
+    }
+
+    @Override
+    public String toString() {
+        return "UserCredit{" +
+                "id=" + id +
+                ", user=" + user +
+                ", credit=" + credit +
+                ", lastUpdate=" + lastUpdate +
+                ", amount=" + amount +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package nl.timgoes.dbservice.dbservicemysql.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity(name="TRANSACTION")
@@ -21,17 +22,50 @@ public class Transaction implements Serializable {
     @Column(name = "STATUS")
     private TransactionStatus status;
 
-    @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,2)")
-    private BigDecimal amount;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "TRANSACTION_DATE")
+    private Date transactionDate;
+
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="CREDIT_RECEIVE")
+    private Credit creditToReceive;
+
+    @Column(name = "AMOUNT_RECEIVE", columnDefinition = "DECIMAL(26,2)")
+    private BigDecimal amountToReceive;
+
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="CREDIT_GIVE")
+    private Credit creditToGive;
+
+    @Column(name = "AMOUNT_GIVE", columnDefinition = "DECIMAL(26,2)")
+    private BigDecimal amountToGive;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="RECEIVER_ID")
     private User receiver;
 
-    public Transaction(User creator, TransactionStatus status, BigDecimal amount, User receiver) {
+    public Transaction(User creator, TransactionStatus status, Credit creditToReceive, BigDecimal amountToReceive) {
         this.creator = creator;
         this.status = status;
-        this.amount = amount;
+        this.creditToReceive = creditToReceive;
+        this.amountToReceive = amountToReceive;
+    }
+
+    public Transaction(User creator, TransactionStatus status, Credit creditToReceive, BigDecimal amountToReceive, User receiver) {
+        this.creator = creator;
+        this.status = status;
+        this.creditToReceive = creditToReceive;
+        this.amountToReceive = amountToReceive;
+        this.receiver = receiver;
+    }
+
+    public Transaction(User creator, TransactionStatus status, Credit creditToReceive, BigDecimal amountToReceive, Credit creditToGive, BigDecimal amountToGive, User receiver) {
+        this.creator = creator;
+        this.status = status;
+        this.creditToReceive = creditToReceive;
+        this.amountToReceive = amountToReceive;
+        this.creditToGive = creditToGive;
+        this.amountToGive = amountToGive;
         this.receiver = receiver;
     }
 
@@ -58,12 +92,44 @@ public class Transaction implements Serializable {
         this.status = status;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public Credit getCreditToReceive() {
+        return creditToReceive;
+    }
+
+    public void setCreditToReceive(Credit creditToReceive) {
+        this.creditToReceive = creditToReceive;
+    }
+
+    public BigDecimal getAmountToReceive() {
+        return amountToReceive;
+    }
+
+    public void setAmountToReceive(BigDecimal amountToReceive) {
+        this.amountToReceive = amountToReceive;
+    }
+
+    public Credit getCreditToGive() {
+        return creditToGive;
+    }
+
+    public void setCreditToGive(Credit creditToGive) {
+        this.creditToGive = creditToGive;
+    }
+
+    public BigDecimal getAmountToGive() {
+        return amountToGive;
+    }
+
+    public void setAmountToGive(BigDecimal amountToGive) {
+        this.amountToGive = amountToGive;
     }
 
     public User getReceiver() {
@@ -75,17 +141,6 @@ public class Transaction implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Transaction{" +
-                "id=" + id +
-                ", creator=" + creator +
-                ", status=" + status +
-                ", amount=" + amount +
-                ", receiver=" + receiver +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Transaction)) return false;
@@ -93,13 +148,32 @@ public class Transaction implements Serializable {
         return Objects.equals(id, that.id) &&
                 Objects.equals(creator, that.creator) &&
                 status == that.status &&
-                Objects.equals(amount, that.amount) &&
+                Objects.equals(transactionDate, that.transactionDate) &&
+                Objects.equals(creditToReceive, that.creditToReceive) &&
+                Objects.equals(amountToReceive, that.amountToReceive) &&
+                Objects.equals(creditToGive, that.creditToGive) &&
+                Objects.equals(amountToGive, that.amountToGive) &&
                 Objects.equals(receiver, that.receiver);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, creator, status, amount, receiver);
+        return Objects.hash(id, creator, status, transactionDate, creditToReceive, amountToReceive, creditToGive, amountToGive, receiver);
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", creator=" + creator +
+                ", status=" + status +
+                ", transactionDate=" + transactionDate +
+                ", creditToReceive=" + creditToReceive +
+                ", amountToReceive=" + amountToReceive +
+                ", creditToGive=" + creditToGive +
+                ", amountToGive=" + amountToGive +
+                ", receiver=" + receiver +
+                '}';
     }
 }

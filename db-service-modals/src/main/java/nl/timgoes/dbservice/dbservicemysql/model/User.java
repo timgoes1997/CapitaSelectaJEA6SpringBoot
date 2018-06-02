@@ -1,5 +1,7 @@
 package nl.timgoes.dbservice.dbservicemysql.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -58,6 +60,7 @@ public class User implements Serializable {
         this.registrationDate = registrationDate;
     }
 
+    @JsonIgnore
     public List<UserCredit> getCredits() {
         return credits;
     }
@@ -66,6 +69,7 @@ public class User implements Serializable {
         this.credits = credits;
     }
 
+    @JsonIgnore
     public List<Transaction> getCreatedTransactions() {
         return createdTransactions;
     }
@@ -74,6 +78,7 @@ public class User implements Serializable {
         this.createdTransactions = createdTransactions;
     }
 
+    @JsonIgnore
     public List<Transaction> getReceivedTranstactions() {
         return receivedTranstactions;
     }
