@@ -1,4 +1,4 @@
-package nl.timgoes.dbservice.dbservicemysql.exceptions;
+package nl.timgoes.exceptionhandling.exceptions;
 
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UserNotFoundException extends RuntimeException {
 
     public UserNotFoundException(String message) {
-        super(message);
+        super("UserNotFoundException: " + message);
     }
 }

@@ -14,7 +14,7 @@ public class User implements Serializable {
     @Column(name="ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", unique = true)
     private String name;
 
     @Temporal(TemporalType.DATE)

@@ -1,5 +1,6 @@
 package nl.timgoes.userservice.resource;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import nl.timgoes.dbservice.dbservicemysql.constant.Constant;
 import nl.timgoes.dbservice.dbservicemysql.model.*;
 import org.apache.http.HttpException;
@@ -30,6 +31,10 @@ public class UserResource {
                 });
 
         return userResponseEntity.getBody();
+    }
+
+    public String fallback(){
+        return "This is a fallbackMethod";
     }
 
     @PostMapping("/create")

@@ -14,8 +14,8 @@ public class Credit implements Serializable {
     @Column(name="ID")
     private Long id;
 
-    @Column(name="NAME")
-    private String Name;
+    @Column(name="NAME", unique = true)
+    private String name;
 
     @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,13)")
     private BigDecimal value;
@@ -25,7 +25,7 @@ public class Credit implements Serializable {
     private Date creationDate;
 
     public Credit(String name, BigDecimal value, Date creationDate) {
-        Name = name;
+        this.name = name;
         this.value = value;
         this.creationDate = creationDate;
     }
@@ -41,18 +41,18 @@ public class Credit implements Serializable {
     public String toString() {
         return "Credit{" +
                 "id=" + id +
-                ", Name='" + Name + '\'' +
+                ", Name='" + name + '\'' +
                 ", value=" + value +
                 ", creationDate=" + creationDate +
                 '}';
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
 
     public BigDecimal getValue() {
@@ -77,7 +77,7 @@ public class Credit implements Serializable {
         if (!(o instanceof Credit)) return false;
         Credit credit = (Credit) o;
         return Objects.equals(id, credit.id) &&
-                Objects.equals(Name, credit.Name) &&
+                Objects.equals(name, credit.name) &&
                 Objects.equals(value, credit.value) &&
                 Objects.equals(creationDate, credit.creationDate);
     }
@@ -85,6 +85,6 @@ public class Credit implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, Name, value, creationDate);
+        return Objects.hash(id, name, value, creationDate);
     }
 }

@@ -1,9 +1,10 @@
 package nl.timgoes.dbservice.dbservicemysql.service;
 
-import nl.timgoes.dbservice.dbservicemysql.exceptions.UserNotFoundException;
 import nl.timgoes.dbservice.dbservicemysql.model.User;
 import nl.timgoes.dbservice.dbservicemysql.repository.UserRepository;
 import nl.timgoes.dbservice.dbservicemysql.service.interfaces.UserService;
+import nl.timgoes.exceptionhandling.exceptions.UserNameAlreadyExistsException;
+import nl.timgoes.exceptionhandling.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String username) {
-        User user = new User(username, new Date());
-        userRepository.save(user);
-        return user;
+        if(userRepository.findByName(username).size() > 0){
+            throw new UserNameAlreadyExistsException("name: " + username);
+        }
+        return userRepository.save(new User(username, new Date()));
     }
 
     @Override
