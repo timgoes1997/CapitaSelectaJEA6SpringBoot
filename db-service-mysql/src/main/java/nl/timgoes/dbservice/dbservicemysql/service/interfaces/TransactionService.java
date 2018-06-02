@@ -1,18 +1,52 @@
 package nl.timgoes.dbservice.dbservicemysql.service.interfaces;
 
+import nl.timgoes.dbservice.dbservicemysql.model.Credit;
 import nl.timgoes.dbservice.dbservicemysql.model.Transaction;
+import nl.timgoes.dbservice.dbservicemysql.model.TransactionStatus;
 import nl.timgoes.dbservice.dbservicemysql.model.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface TransactionService {
     Transaction findById(Long id);
-    Transaction createGiftTransaction();
-    Transaction createStorageTransaction();
+    Transaction createGiftTransaction(User creator,
+                                      Credit receiverCreditGiven,
+                                      BigDecimal receiverAmountGiven,
+                                      User receiver);
+    Transaction createGiftTransaction(String creatorName,
+                                      String receiverCreditGivenName,
+                                      BigDecimal receiverAmountGiven,
+                                      String receiverName);
+    Transaction createStorageTransaction(User creator,
+                                         Credit creatorCreditReceived,
+                                         BigDecimal creatorReceivedAmount);
+    Transaction createStorageTransaction(String creatorName,
+                                         String creatorCreditReceived,
+                                         BigDecimal creatorReceivedAmount);
+    Transaction createExchangeTransaction(User creator,
+                                          Credit creatorCreditReceived,
+                                          BigDecimal creatorReceivedAmount,
+                                          User receiver,
+                                          Credit receiverCreditGiven,
+                                          BigDecimal receiverAmountGiven);
+    Transaction createExchangeTransaction(String creatorName,
+                                          String creatorCreditReceivedName,
+                                          BigDecimal creatorReceivedAmount,
+                                          String receiverName,
+                                          String receiverCreditGivenName,
+                                          BigDecimal receiverAmountGiven);
 
     Transaction acceptTransaction(Long id);
     Transaction denyTransaction(Long id);
 
-    List<Transaction> findTransactionFromUser(User user);
-    List<Transaction> findTransactionToUser(User user);
+    List<Transaction> findTransactionCreator(User user);
+    List<Transaction> findTransactionCreator(String userName);
+    List<Transaction> findTransactionReceiver(User user);
+    List<Transaction> findTransactionReceiver(String userName);
+
+    List<Transaction> findTransactionByStatusAndCreator(User user, TransactionStatus status);
+    List<Transaction> findTransactionByStatusAndCreator(String userName, TransactionStatus status);
+    List<Transaction> findTransactionByStatusAndReceiver(User user, TransactionStatus status);
+    List<Transaction> findTransactionByStatusAndReceiver(String userName, TransactionStatus status);
 }
