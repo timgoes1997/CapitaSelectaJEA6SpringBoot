@@ -5,6 +5,6 @@ import nl.timgoes.dbservice.dbservicemysql.model.User;
 public interface UserService {
     User findByUsername(String username);
     User createUser(String username);
-    User deleteUser(String username);
-    User deleteUser(Long id);
+    void deleteUser(String username);
+    void deleteUser(Long id);
 }

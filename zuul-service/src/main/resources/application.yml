@@ -4,6 +4,9 @@ zuul:
     database-server:
       path: /db/**
       serviceId: DB-SERVICE
+    user-service:
+      path: /user/**
+      serviceId: USER-SERVICE
 
 server:
   port: 8100

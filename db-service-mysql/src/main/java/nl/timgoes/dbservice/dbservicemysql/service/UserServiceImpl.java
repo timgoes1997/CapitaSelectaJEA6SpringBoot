@@ -32,22 +32,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteUser(String username) {
+    public void deleteUser(String username) {
         List<User> users = userRepository.findByName(username);
         if (users.size() < 1) throw new UserNotFoundException("name: " + username);
-
         User user = users.get(0);
         userRepository.delete(user);
-        return user;
     }
 
     @Override
-    public User deleteUser(Long id) {
+    public void deleteUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
             userRepository.deleteById(id);
-            return user;
         } else {
             throw new UserNotFoundException("id: " + id.toString());
         }

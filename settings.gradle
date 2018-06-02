@@ -9,8 +9,9 @@
 
 rootProject.name = 'credit-app'
 
+include "user-service"
 include "eureka-service"
 include "db-service-h2"
 include "db-service-mysql"
-include "zuul-service"
 include "db-service-modals"
+include "zuul-service"
