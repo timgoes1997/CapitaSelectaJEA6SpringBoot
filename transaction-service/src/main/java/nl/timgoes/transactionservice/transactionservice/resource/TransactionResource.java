@@ -1,7 +1,7 @@
 package nl.timgoes.transactionservice.transactionservice.resource;
 
-import nl.timgoes.dbservice.modals.constant.Constant;
-import nl.timgoes.dbservice.modals.model.Transaction;
+import nl.timgoes.core.constant.Constant;
+import nl.timgoes.core.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

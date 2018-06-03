@@ -35,10 +35,10 @@ shadowJar {
 	version = null
 }
 
-/*
+
 task copyJar(type: Copy) {
-	from sourceSets.main.java // here it automatically reads jar file produced from jar task
+	from jar//sourceSets.main.java // here it automatically reads jar file produced from jar task
 	into '../libs'
 }
 
-build.dependsOn(copyJar)*/
+build.dependsOn(copyJar)

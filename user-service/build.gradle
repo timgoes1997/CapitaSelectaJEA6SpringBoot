@@ -33,6 +33,8 @@ dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-hystrix')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	compile project(':db-service-modals')
+	compile project(':exception-module')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
@@ -41,3 +43,10 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+
+task copyJar(type: Copy) {
+	from jar // here it automatically reads jar file produced from jar task
+	into '../service'
+}
+
+build.dependsOn(copyJar)
