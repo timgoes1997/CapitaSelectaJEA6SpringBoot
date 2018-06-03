@@ -1,46 +1,38 @@
 buildscript {
-	ext {
-		springBootVersion = '2.0.2.RELEASE'
-	}
+
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+plugins {
+	id 'com.github.johnrengelman.shadow' version '2.0.4'
+	id 'java'
+}
 
-group = 'nl.timgoes.dbservice'
+group = 'nl.timgoes.core'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-	maven { url "https://repo.spring.io/milestone" }
-}
-
-
-ext {
-	springCloudVersion = 'Finchley.RC2'
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-	runtime('mysql:mysql-connector-java')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+shadowJar {
+	baseName = 'db-core'
+	classifier = null
+	version = null
 }
 
 /*
