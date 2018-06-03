@@ -7,6 +7,12 @@ zuul:
     user-service:
       path: /user/**
       serviceId: USER-SERVICE
+    credit-service:
+      path: /credit/**
+      serviceId: CREDIT-SERVICE
+    transaction-service:
+      path: /transaction/**
+      serviceId: TRANSACTION-SERVICE
 
 server:
   port: 8100

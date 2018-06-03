@@ -52,7 +52,7 @@ public class Credit implements Serializable {
     }
 
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
 
     public BigDecimal getValue() {
