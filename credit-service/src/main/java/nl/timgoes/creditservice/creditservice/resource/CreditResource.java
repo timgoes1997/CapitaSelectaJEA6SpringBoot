@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("")
@@ -20,7 +21,7 @@ public class CreditResource {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     private Credit getCredit(@PathVariable("name") String name) {
         String url = Constant.DB_SERVICE_URL + "/credit/" + name;
 
@@ -28,6 +29,32 @@ public class CreditResource {
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Credit>() {
+                });
+
+        return userResponseEntity.getBody();
+    }
+
+    @GetMapping("/credits")
+    private List<Credit> getCredits() {
+        String url = Constant.DB_SERVICE_URL + "/credit/";
+
+        ResponseEntity<List<Credit>> userResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Credit>>() {
+                });
+
+        return userResponseEntity.getBody();
+    }
+
+    @GetMapping("/list")
+    private List<String> getCreditNames() {
+        String url = Constant.DB_SERVICE_URL + "/credit/names";
+
+        ResponseEntity<List<String>> userResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<String>>() {
                 });
 
         return userResponseEntity.getBody();

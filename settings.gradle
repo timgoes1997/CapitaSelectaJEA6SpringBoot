@@ -9,6 +9,7 @@
 
 rootProject.name = 'credit-app'
 
+include ":db-service-h2"
 include ":credit-service"
 include ":transaction-service"
 include ":user-service"
