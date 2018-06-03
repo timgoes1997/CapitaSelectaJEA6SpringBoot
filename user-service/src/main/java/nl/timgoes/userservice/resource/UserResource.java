@@ -1,16 +1,13 @@
 package nl.timgoes.userservice.resource;
 
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import nl.timgoes.dbservice.dbservicemysql.constant.Constant;
-import nl.timgoes.dbservice.dbservicemysql.model.*;
-import org.apache.http.HttpException;
+import nl.timgoes.dbservice.modals.constant.Constant;
+import nl.timgoes.dbservice.modals.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
