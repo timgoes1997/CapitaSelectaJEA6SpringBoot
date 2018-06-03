@@ -7,6 +7,7 @@ import nl.timgoes.dbservice.dbservicemysql.repository.UserCreditRepository;
 import nl.timgoes.dbservice.dbservicemysql.service.interfaces.CreditService;
 import nl.timgoes.dbservice.dbservicemysql.service.interfaces.UserCreditService;
 import nl.timgoes.dbservice.dbservicemysql.service.interfaces.UserService;
+import nl.timgoes.exceptionhandling.exceptions.NotEnoughUserCreditException;
 import nl.timgoes.exceptionhandling.exceptions.UserCreditAlreadyExistsException;
 import nl.timgoes.exceptionhandling.exceptions.UserCreditNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,5 +105,40 @@ public class UserCreditServiceImpl implements UserCreditService {
                 userService.findByUsername(userName),
                 creditService.findByName(creditName),
                 amount);
+    }
+
+    @Override
+    public UserCredit addToUserCredit(User user, Credit credit, BigDecimal amount) {
+        UserCredit creditToAdd = findByCreditAndUser(credit, user);
+        if(creditToAdd != null){
+            return updateUserCredit(
+                    creditToAdd.getUser(),
+                    creditToAdd.getCredit(),
+                    creditToAdd.getAmount().add(amount));
+        }else{
+            return createUserCredit(user, credit, amount);
+        }
+    }
+
+    @Override
+    public UserCredit transfer(UserCredit from, User to, BigDecimal amount) {
+        updateUserCredit(
+                from.getUser(),
+                from.getCredit(),
+                from.getAmount().subtract(amount));
+
+        return addToUserCredit(to, from.getCredit(), amount);
+    }
+
+    @Override
+    public UserCredit hasEnoughCreditForTransaction(User user, Credit credit, BigDecimal amount) {
+        UserCredit userCreditToCheck = findByCreditAndUser(credit, user);
+        if(userCreditToCheck ==  null){
+            throw new UserCreditNotFoundException("User has no credits of given type");
+        }
+        if (userCreditToCheck.getAmount().compareTo(amount) < 0) {
+            throw new NotEnoughUserCreditException("Your credit is to low by " + userCreditToCheck.getAmount().subtract(amount).toString());
+        }
+        return userCreditToCheck;
     }
 }

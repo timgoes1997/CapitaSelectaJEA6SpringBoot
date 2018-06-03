@@ -38,6 +38,10 @@ public interface TransactionService {
                                           BigDecimal receiverAmountGiven);
 
     Transaction acceptTransaction(Long id);
+    Transaction acceptStorageTransaction(Transaction transaction);
+    Transaction acceptGiftTransaction(Transaction transaction);
+    Transaction acceptExchangeTransaction(Transaction transaction);
+
     Transaction denyTransaction(Long id);
 
     List<Transaction> findTransactionCreator(User user);

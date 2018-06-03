@@ -22,6 +22,10 @@ public class Transaction implements Serializable {
     @Column(name = "STATUS")
     private TransactionStatus status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TYPE")
+    private TransactionType type;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "TRANSACTION_DATE")
     private Date transactionDate;
@@ -49,14 +53,16 @@ public class Transaction implements Serializable {
         this.status = status;
         this.creditToReceive = creditToReceive;
         this.amountToReceive = amountToReceive;
+        this.type = TransactionType.STORAGE;
     }
 
-    public Transaction(User creator, TransactionStatus status, Credit creditToReceive, BigDecimal amountToReceive, User receiver) {
+    public Transaction(User creator, TransactionStatus status, Credit creditToGive, BigDecimal amountToGive, User receiver) {
         this.creator = creator;
         this.status = status;
-        this.creditToReceive = creditToReceive;
-        this.amountToReceive = amountToReceive;
+        this.creditToGive = creditToGive;
+        this.amountToGive = amountToGive;
         this.receiver = receiver;
+        this.type = TransactionType.GIFT;
     }
 
     public Transaction(User creator, TransactionStatus status, Credit creditToReceive, BigDecimal amountToReceive, Credit creditToGive, BigDecimal amountToGive, User receiver) {
@@ -67,6 +73,7 @@ public class Transaction implements Serializable {
         this.creditToGive = creditToGive;
         this.amountToGive = amountToGive;
         this.receiver = receiver;
+        this.type = TransactionType.EXCHANGE;
     }
 
     public Transaction() {
@@ -175,5 +182,13 @@ public class Transaction implements Serializable {
                 ", amountToGive=" + amountToGive +
                 ", receiver=" + receiver +
                 '}';
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 }

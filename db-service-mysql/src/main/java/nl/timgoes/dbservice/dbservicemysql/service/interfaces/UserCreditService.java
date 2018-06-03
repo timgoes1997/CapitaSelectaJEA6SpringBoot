@@ -24,4 +24,8 @@ public interface UserCreditService {
     UserCredit createUserCredit(String creditName, String userName, BigDecimal amount);
     UserCredit updateUserCredit(User user, Credit credit, BigDecimal amount);
     UserCredit updateUserCredit(String creditName, String userName, BigDecimal amount);
+
+    UserCredit addToUserCredit(User user, Credit credit, BigDecimal amount);
+    UserCredit transfer(UserCredit from, User to, BigDecimal amount);
+    UserCredit hasEnoughCreditForTransaction(User user, Credit credit, BigDecimal amount);
 }
