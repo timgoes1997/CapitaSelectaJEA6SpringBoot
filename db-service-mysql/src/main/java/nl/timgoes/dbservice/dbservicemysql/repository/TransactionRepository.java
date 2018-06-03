@@ -1,5 +1,6 @@
 package nl.timgoes.dbservice.dbservicemysql.repository;
 
+import jdk.net.SocketFlow;
 import nl.timgoes.dbservice.dbservicemysql.model.Transaction;
 import nl.timgoes.dbservice.dbservicemysql.model.TransactionStatus;
 import nl.timgoes.dbservice.dbservicemysql.model.User;
@@ -15,4 +16,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByCreatorOrderByTransactionDate(User creator);
     List<Transaction> findByCreatorOrderByStatus(User creator);
     List<Transaction> findByCreatorAndStatus(User receiver, TransactionStatus status);
+
+    List<Transaction> findByCreatorOrReceiverAndStatusOrderByTransactionDateDesc(User creator, User receiver, TransactionStatus status);
 }

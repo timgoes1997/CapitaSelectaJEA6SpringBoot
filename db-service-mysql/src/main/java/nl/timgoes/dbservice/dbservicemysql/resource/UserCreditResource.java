@@ -19,14 +19,12 @@ public class UserCreditResource {
 
     @GetMapping("/{userName}")
     private List<UserCredit> getUserCredits(@PathVariable(value = "userName") String userName) {
-        List<UserCredit> userCredit =  userCreditService.findByUserOrdered(userName);
-        return userCredit;
+        return userCreditService.findByUserOrdered(userName);
     }
 
     @GetMapping("/{userName}/default")
     private List<UserCredit> getUserCreditsNonOrdered(@PathVariable(value = "userName") String userName) {
-        List<UserCredit> userCredits = userCreditService.findByUser(userName);
-        return userCredits;
+        return userCreditService.findByUser(userName);
     }
 
     @GetMapping("/{userName}/{creditName}")
@@ -35,6 +33,7 @@ public class UserCreditResource {
         return userCreditService.findByCreditAndUser(creditName, userName);
     }
 
+    /*
     @PostMapping("/create")
     private UserCredit createUserCredit(@RequestParam(value = "userName") String userName,
                                         @RequestParam(value = "creditName") String creditName,
@@ -47,6 +46,6 @@ public class UserCreditResource {
                                         @RequestParam(value = "creditName") String creditName,
                                         @RequestParam(value = "amount") BigDecimal amount) {
         return userCreditService.updateUserCredit(creditName, userName, amount);
-    }
+    }*/
 
 }

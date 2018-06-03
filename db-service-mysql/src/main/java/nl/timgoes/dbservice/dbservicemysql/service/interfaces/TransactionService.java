@@ -53,4 +53,6 @@ public interface TransactionService {
     List<Transaction> findTransactionByStatusAndCreator(String userName, TransactionStatus status);
     List<Transaction> findTransactionByStatusAndReceiver(User user, TransactionStatus status);
     List<Transaction> findTransactionByStatusAndReceiver(String userName, TransactionStatus status);
+    List<Transaction> findTransactionByStatus(User user, TransactionStatus status);
+    List<Transaction> findTransactionByStatus(String userName, TransactionStatus status);
 }

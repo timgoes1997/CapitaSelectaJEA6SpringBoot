@@ -250,5 +250,13 @@ public class TransactionServiceImpl implements TransactionService {
         return findTransactionByStatusAndReceiver(userService.findByUsername(userName), status);
     }
 
+    @Override
+    public List<Transaction> findTransactionByStatus(User user, TransactionStatus status) {
+        return transactionRepository.findByCreatorOrReceiverAndStatusOrderByTransactionDateDesc(user, user, status);
+    }
 
+    @Override
+    public List<Transaction> findTransactionByStatus(String userName, TransactionStatus status) {
+        return findTransactionByStatus(userService.findByUsername(userName), status);
+    }
 }
