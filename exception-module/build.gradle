@@ -1,43 +1,38 @@
 buildscript {
-    ext {
-        springBootVersion = '2.0.2.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'java'
+}
 
-group = 'nl.timgoes.exceptions'
+group = 'nl.timgoes.exceptionhandling'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.spring.io/milestone" }
-}
-
-ext {
-    springCloudVersion = 'Finchley.RC2'
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    // https://mvnrepository.com/artifact/org.springframework/spring-web
+    compile group: 'org.springframework', name: 'spring-web', version: '5.0.6.RELEASE'
+
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
+shadowJar {
+    baseName = 'exception-module'
+    classifier = null
+    version = null
 }
+
+
 
 /*
 task copyJar(type: Copy) {
