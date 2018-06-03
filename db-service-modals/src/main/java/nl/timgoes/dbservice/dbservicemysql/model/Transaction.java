@@ -14,7 +14,7 @@ public class Transaction implements Serializable {
     @Column(name="ID")
     private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="CREATOR_ID")
     private User creator;
 
@@ -30,21 +30,21 @@ public class Transaction implements Serializable {
     @Column(name = "TRANSACTION_DATE")
     private Date transactionDate;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="CREDIT_RECEIVE")
     private Credit creditToReceive;
 
-    @Column(name = "AMOUNT_RECEIVE", columnDefinition = "DECIMAL(26,2)")
+    @Column(name = "AMOUNT_RECEIVE", columnDefinition = "DECIMAL(26,13)")
     private BigDecimal amountToReceive;
 
-    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="CREDIT_GIVE")
     private Credit creditToGive;
 
-    @Column(name = "AMOUNT_GIVE", columnDefinition = "DECIMAL(26,2)")
+    @Column(name = "AMOUNT_GIVE", columnDefinition = "DECIMAL(26,13)")
     private BigDecimal amountToGive;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="RECEIVER_ID")
     private User receiver;
 

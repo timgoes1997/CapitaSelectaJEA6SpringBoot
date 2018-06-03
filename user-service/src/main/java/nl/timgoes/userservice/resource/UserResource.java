@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("")
 public class UserResource {
@@ -21,7 +23,7 @@ public class UserResource {
     private RestTemplate restTemplate;
 
     @GetMapping("/{username}")
-    public User getUser(@PathVariable("username") String userName) {
+    private User getUser(@PathVariable("username") String userName) {
         String url = Constant.DB_SERVICE_URL + "/user/" + userName;
 
         ResponseEntity<User> userResponseEntity = restTemplate.exchange(url,
@@ -33,12 +35,48 @@ public class UserResource {
         return userResponseEntity.getBody();
     }
 
-    public String fallback(){
-        return "This is a fallbackMethod";
+    @GetMapping("/{username}/credits")
+    private List<UserCredit> getUserCredits(@PathVariable(value = "username") String userName) {
+        String url = Constant.DB_SERVICE_URL + "/user/credit/" + userName;
+
+        ResponseEntity<List<UserCredit>> userCreditResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<UserCredit>>() {
+                });
+
+        return userCreditResponseEntity.getBody();
+    }
+
+    @GetMapping("/{username}/credits/default")
+    private List<UserCredit> getUserCreditsNonOrdered(@PathVariable(value = "username") String userName) {
+        String url = Constant.DB_SERVICE_URL + "/user/credit/" + userName + "/ordered/default";
+
+        ResponseEntity<List<UserCredit>> userCreditResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<UserCredit>>() {
+                });
+
+        return userCreditResponseEntity.getBody();
+    }
+
+    @GetMapping("/{username}/credit/{creditname}")
+    private UserCredit getUserCredit(@PathVariable(value = "username") String userName,
+                                     @PathVariable(value = "creditname") String creditName) {
+        String url = Constant.DB_SERVICE_URL + "/user/credit/" + userName + "/" + creditName;
+
+        ResponseEntity<UserCredit> userResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<UserCredit>() {
+                });
+
+        return userResponseEntity.getBody();
     }
 
     @PostMapping("/create")
-    private User createUser(@RequestParam(value="name") String username){
+    private User createUser(@RequestParam(value = "name") String username) {
         String url = Constant.DB_SERVICE_URL + "/user/create";
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
@@ -48,13 +86,13 @@ public class UserResource {
     }
 
     @DeleteMapping("/delete")
-    private void deleteUser(@RequestParam(value="name") String username){
+    private void deleteUser(@RequestParam(value = "name") String username) {
         String url = Constant.DB_SERVICE_URL + "/user/delete/name/" + username;
         restTemplate.delete(url);
     }
 
     @DeleteMapping("/delete/{id}")
-    private void deleteUserById(@PathVariable(value="id") Long id){
+    private void deleteUserById(@PathVariable(value = "id") Long id) {
         String url = Constant.DB_SERVICE_URL + "/user/delete/" + id.toString();
         restTemplate.delete(url);
     }

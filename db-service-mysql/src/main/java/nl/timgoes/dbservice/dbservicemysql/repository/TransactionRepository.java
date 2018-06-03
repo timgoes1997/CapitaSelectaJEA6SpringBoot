@@ -17,5 +17,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByCreatorOrderByStatus(User creator);
     List<Transaction> findByCreatorAndStatus(User receiver, TransactionStatus status);
 
-    List<Transaction> findByCreatorOrReceiverAndStatusOrderByTransactionDateDesc(User creator, User receiver, TransactionStatus status);
+    List<Transaction> findByStatusAndCreatorOrReceiverOrderByTransactionDateDesc(User creator, User receiver, TransactionStatus status);
 }

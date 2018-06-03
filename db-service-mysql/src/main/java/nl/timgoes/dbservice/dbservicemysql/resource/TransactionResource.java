@@ -17,28 +17,53 @@ public class TransactionResource {
     private TransactionService transactionService;
 
     @GetMapping("/{username}")
-    private List<Transaction> getUserCreatedTransactions(@PathVariable(value = "userName") String userName){
+    private List<Transaction> getUserCreatedTransactions(@PathVariable(value = "username") String userName){
         return transactionService.findTransactionCreator(userName);
     }
 
     @GetMapping("/{username}/received")
-    private List<Transaction> getUserReceivedTransactions(@PathVariable(value = "userName") String userName){
+    private List<Transaction> getUserReceivedTransactions(@PathVariable(value = "username") String userName){
         return transactionService.findTransactionReceiver(userName);
     }
 
-    @GetMapping("/{username}/inprogress")
-    private List<Transaction> getUserInProgressTransactions(@PathVariable(value = "userName") String userName){
-        return transactionService.findTransactionByStatus(userName, TransactionStatus.INPROGRESS);
+    @GetMapping("/{username}/received/inprogress")
+    private List<Transaction> getUserReceivedInProgressTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndReceiver(userName, TransactionStatus.INPROGRESS);
     }
 
-    @GetMapping("/{username}/completed")
-    private List<Transaction> getUserCompletedTransactions(@PathVariable(value = "userName") String userName){
-        return transactionService.findTransactionByStatus(userName, TransactionStatus.COMPLETE);
+    @GetMapping("/{username}/received/completed")
+    private List<Transaction> getUserReceivedCompletedTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndReceiver(userName, TransactionStatus.COMPLETE);
     }
 
-    @GetMapping("/{username}/canceled")
-    private List<Transaction> getUserCanceledTransactions(@PathVariable(value = "userName") String userName){
-        return transactionService.findTransactionByStatus(userName, TransactionStatus.CANCELED);
+    @GetMapping("/{username}/received/canceled")
+    private List<Transaction> getUserReceivedCanceledTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndReceiver(userName, TransactionStatus.CANCELED);
+    }
+
+    @GetMapping("/{username}/created/inprogress")
+    private List<Transaction> getUserCreatedInProgressTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndCreator(userName, TransactionStatus.INPROGRESS);
+    }
+
+    @GetMapping("/{username}/created/completed")
+    private List<Transaction> getUserCreatedCompletedTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndCreator(userName, TransactionStatus.COMPLETE);
+    }
+
+    @GetMapping("/{username}/created/canceled")
+    private List<Transaction> getUserCreatedCanceledTransactions(@PathVariable(value = "username") String userName){
+        return transactionService.findTransactionByStatusAndCreator(userName, TransactionStatus.CANCELED);
+    }
+
+    @PostMapping("{id}/accept")
+    private Transaction acceptTransfer(@PathVariable(value = "id") Long id){
+        return transactionService.acceptTransaction(id);
+    }
+
+    @PostMapping("{id}/decline")
+    private Transaction declineTransfer(@PathVariable(value = "id") Long id){
+        return transactionService.denyTransaction(id);
     }
 
     @PostMapping("/create/gift")

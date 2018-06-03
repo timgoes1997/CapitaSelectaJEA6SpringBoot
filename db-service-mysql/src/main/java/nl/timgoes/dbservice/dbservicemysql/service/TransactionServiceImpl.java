@@ -252,7 +252,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> findTransactionByStatus(User user, TransactionStatus status) {
-        return transactionRepository.findByCreatorOrReceiverAndStatusOrderByTransactionDateDesc(user, user, status);
+        return transactionRepository.findByStatusAndCreatorOrReceiverOrderByTransactionDateDesc(user, user, status);
     }
 
     @Override

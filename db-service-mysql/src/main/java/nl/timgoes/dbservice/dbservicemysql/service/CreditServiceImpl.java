@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CreditServiceImpl implements CreditService {
@@ -59,5 +60,18 @@ public class CreditServiceImpl implements CreditService {
         } else {
             throw new CreditNotFoundException("id: " + id.toString());
         }
+    }
+
+    @Override
+    public List<Credit> getCredits() {
+        return creditRepository.findAll();
+    }
+
+    @Override
+    public List<String> getCreditNames() {
+        return creditRepository.findAll()
+                .stream()
+                .map(Credit::getName)
+                .collect(Collectors.toList());
     }
 }

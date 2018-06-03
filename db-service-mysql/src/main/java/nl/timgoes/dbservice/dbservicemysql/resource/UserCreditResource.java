@@ -22,7 +22,7 @@ public class UserCreditResource {
         return userCreditService.findByUserOrdered(userName);
     }
 
-    @GetMapping("/{userName}/default")
+    @GetMapping("/{userName}/ordered/default")
     private List<UserCredit> getUserCreditsNonOrdered(@PathVariable(value = "userName") String userName) {
         return userCreditService.findByUser(userName);
     }
