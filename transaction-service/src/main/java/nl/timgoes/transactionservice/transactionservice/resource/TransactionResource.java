@@ -112,6 +112,19 @@ public class TransactionResource {
         return userResponseEntity.getBody();
     }
 
+    @GetMapping("/{username}/created/inprogress")
+    private List<Transaction> getUserCreatedInprogressTransactions(@PathVariable(value = "username") String userName){
+        String url = Constant.DB_SERVICE_URL + "/transaction/" + userName + "/created/inprogress";
+
+        ResponseEntity<List<Transaction>> userResponseEntity = restTemplate.exchange(url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Transaction>>() {
+                });
+
+        return userResponseEntity.getBody();
+    }
+
     @GetMapping("/{username}/created/canceled")
     private List<Transaction> getUserCreatedCanceledTransactions(@PathVariable(value = "username") String userName){
         String url = Constant.DB_SERVICE_URL + "/transaction/" + userName + "/created/canceled";
@@ -127,13 +140,13 @@ public class TransactionResource {
 
     @PostMapping("{id}/accept")
     private Transaction acceptTransfer(@PathVariable(value = "id") Long id){
-        String url = Constant.DB_SERVICE_URL + "/transaction/" + id + "/accept";
+        String url = Constant.DB_SERVICE_URL + "/transaction/" + id.toString() + "/accept";
         return restTemplate.postForObject(url, null, Transaction.class);
     }
 
     @PostMapping("{id}/decline")
     private Transaction declineTransfer(@PathVariable(value = "id") Long id){
-        String url = Constant.DB_SERVICE_URL + "/transaction/" + id + "/decline";
+        String url = Constant.DB_SERVICE_URL + "/transaction/" + id.toString() + "/decline";
         return restTemplate.postForObject(url, null, Transaction.class);
     }
 

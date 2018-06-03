@@ -26,7 +26,7 @@ public class UserCredit implements Serializable {
     @Column(name = "LAST_UPDATE")
     private Date lastUpdate;
 
-    @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,26)")
+    @Column(name = "AMOUNT", columnDefinition = "DECIMAL(26,13)")
     private BigDecimal amount;
 
     public UserCredit(User user, Credit credit, BigDecimal amount) {

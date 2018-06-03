@@ -1,0 +1,56 @@
+/api:
+	/user:
+		/{username} (GET)
+		/{username}/credits (GET)
+		/{username}/credits/default (GET)
+		/{username}/credit/{creditname} (GET)
+		/create: (POST)
+			RequestParam:
+				name: String
+		/delete: (DELETE)
+			RequestParam:
+				name: String
+		/delete/{id} (DELETE)
+		
+	/transaction:
+		/{username} (GET) 
+		/{username}/received (GET)
+		/{username}/received/inprogress (GET)
+		/{username}/received/completed (GET)
+		/{username}/received/canceled (GET)
+		/{username}/created (GET)
+		/{username}/created/inprogress (GET)
+		/{username}/created/completed (GET)
+		/{username}/created/canceled (GET)
+		/{id}/accept (GET)
+		/{id}/decline (GET)
+		/create/gift (POST)
+			RequestParam:
+				creatorName: String
+				creditName: String
+				amount: BigDecimal
+				receiverName: String		
+		/create/storage: (POST)
+			RequestParam:
+				creatorName: String
+				creditName: String
+				amount: BigDecimal
+		/create/exchange: (POST)
+			RequestParam:
+				creatorName: String
+				creditCreator: String
+				amountCreator: BigDecimal
+				receiverName: String
+				creditReceiver: String
+				amountReceiver: String
+				
+	/credit:
+		/name/{name} (GET)
+		/credits (GET)
+		/list (GET)
+		/create: (POST)
+			RequestParam:
+				name: String
+				valuer: BigDecimal
+		/delete/name/{name} (DELETE)
+		/credit/delete/{id} (DELETE)
