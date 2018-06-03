@@ -1,7 +1,6 @@
 package nl.timgoes.userservice.resource;
 
 import nl.timgoes.dbservice.modals.constant.Constant;
-import nl.timgoes.dbservice.modals.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
